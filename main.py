@@ -21,7 +21,7 @@ client = WebClient(token=SLACK_API_TOKEN)
 
 
 def send_slack(menu):
-    channel = '#viddl-agent-test'
+    channel = '#food'
     text = "Börze: " + "\n" + menu[1] + "\n" + menu[2]
 
     try:
