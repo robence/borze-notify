@@ -1,0 +1,5 @@
+.env
+.vscode
+
+#virtual env folder
+borze-notify
