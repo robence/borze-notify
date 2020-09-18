@@ -11,7 +11,7 @@ from slack import WebClient
 from slack.errors import SlackApiError
 
 
-env_path = Path('.') / '.env'
+env_path = Path(__file__).parent.absolute() / '.env'
 load_dotenv(dotenv_path=env_path)
 
 SLACK_API_TOKEN = os.getenv("SLACK_API_TOKEN")
