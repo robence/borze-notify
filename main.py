@@ -21,12 +21,12 @@ BASE_URL = 'http://borzeetterem.hu/'
 client = WebClient(token=SLACK_API_TOKEN)
 
 
-def send_slack(menu):
+def send_slack(menus):
     channel = '#food'
-    # text = "Börze: " + "\n" + menu[1] + "\n" + menu[2]
 
     try:
-        client.chat_postMessage(channel=channel, text=menu)
+        for menu in menus:
+            client.chat_postMessage(channel=channel, text=menu)
     except SlackApiError as e:
         print(f"Got an error: {e.response['error']}")
 
@@ -64,7 +64,7 @@ def get_cafe_vian_menu(weekday):
     appetizer_selector = day_selector + '/ul/li/div/div/span'
 
     # menu information
-    title = "Café Vian Bisztró"
+    title = ":sparkles: *Café Vian Bisztró*"
     place = iframe_tree.xpath(div_selector + place_selector + "/h3")[0].text
 
     # day = iframe_tree.xpath(day_selector + '/div/div/div/span/span')[0].text
@@ -93,7 +93,7 @@ def get_borze_menu(weekday):
     eloetel = menus[weekday * 2].text
     masodik = menus[weekday * 2 + 1].text
     # menu = [nap, eloetel, masodik]
-    title = 'Börze'
+    title = ':tada: *Börze*'
 
     menu = '%s\n\n%s\n%s\n' % (
         title, eloetel, masodik)
@@ -112,10 +112,9 @@ def main():
 
     menu1 = get_borze_menu(weekday)
     menu2 = get_cafe_vian_menu(weekday)
-    print(menu1)
-    print(menu2)
-    send_slack(menu1)
-    send_slack(menu2)
+
+    menus = [menu1, menu2]
+    send_slack(menus)
 
 
 if __name__ == "__main__":
