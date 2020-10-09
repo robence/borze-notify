@@ -16,7 +16,6 @@ env_path = Path(__file__).parent.absolute() / '.env'
 load_dotenv(dotenv_path=env_path)
 
 SLACK_API_TOKEN = os.getenv("SLACK_API_TOKEN")
-BASE_URL = 'http://borzeetterem.hu/'
 
 client = WebClient(token=SLACK_API_TOKEN)
 
@@ -82,6 +81,7 @@ def get_cafe_vian_menu(weekday):
 
 
 def get_borze_menu(weekday):
+    BASE_URL = 'http://borzeetterem.hu/'
     session_requests = requests.session()
     result = session_requests.get(BASE_URL)
 
