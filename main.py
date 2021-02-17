@@ -87,16 +87,18 @@ def get_borze_menu(weekday):
 
     tree = html.fromstring(result.text)
 
-    days = tree.xpath("/html/body/div/main/section[2]/div/div/h4")
+    # days = tree.xpath("/html/body/div/main/section[2]/div/div/h4")
     menus = tree.xpath("/html/body/div/main/section[2]/div/div/ul/li[1]/p")
-    # nap = days[weekday].text
-    eloetel = menus[weekday * 2].text
-    masodik = menus[weekday * 2 + 1].text
-    # menu = [nap, eloetel, masodik]
+
+    magicIndex = weekday * 2 + 3
+
+    menuA = menus[magicIndex - 1].text
+    menuB = menus[magicIndex].text
+    menuVegan = menus[magicIndex + 1].text
     title = ':tada: *Börze*'
 
-    menu = '%s\n\n%s\n%s\n' % (
-        title, eloetel, masodik)
+    menu = '%s\n\n%s\n%s\n%s\n' % (
+        title, menuA, menuB, menuVegan)
     return menu
 
 
@@ -111,9 +113,15 @@ def main():
         return
 
     menu1 = get_borze_menu(weekday)
-    menu2 = get_cafe_vian_menu(weekday)
+    # menu2 = get_cafe_vian_menu(weekday)
 
-    menus = [menu1, menu2]
+    sign = '✨ Sent from Ben\'s Macbook Pro 👀'
+    signedMenu = '%s\n%s' % (menu1, sign)
+
+    # menus = [menu1, menu2]
+    menus = [signedMenu]
+
+    print(signedMenu)
     send_slack(menus)
 
 
